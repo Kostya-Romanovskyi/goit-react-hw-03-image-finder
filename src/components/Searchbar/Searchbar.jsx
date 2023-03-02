@@ -1,4 +1,7 @@
 import { Component } from 'react';
+import { ReactComponent as SearchIcon } from '../../icons/Search-icon.svg'
+import { toast } from 'react-toastify';
+import PropTypes from 'prop-types';
 import css from './Searchbar.module.css'
 
 export default class Searchbar extends Component {
@@ -13,8 +16,7 @@ export default class Searchbar extends Component {
     handleSubmit = event => {
         event.preventDefault();
         if (this.state.search.trim() === '') {
-            alert('bvz')
-            return
+            return toast.error("Write a keywords for search images")
         }
         this.props.keyWords(this.state.search);
 
@@ -25,6 +27,7 @@ export default class Searchbar extends Component {
         return <header className={css.Searchbar}>
             <form onSubmit={this.handleSubmit} className={css.SearchForm}>
                 <button type="submit" className={css.SearchForm__button}>
+                    <SearchIcon width="20" height="20" />
                     <span className={css.SearchForm__button_label}>Search</span>
                 </button>
 
@@ -40,6 +43,9 @@ export default class Searchbar extends Component {
             </form>
         </header>
     }
-
 }
 
+Searchbar.propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+    onChange: PropTypes.func.isRequired
+}
